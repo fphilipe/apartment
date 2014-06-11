@@ -167,7 +167,8 @@ module Apartment
       #   @return {String} raw SQL contaning inserts with data from schema_migrations
       #
       def pg_dump_schema_migrations_data
-        `pg_dump -a --inserts -t schema_migrations -n #{Apartment.default_schema} bithub_development`
+        dbname = ActiveRecord::Base.connection_config[:database]
+        `pg_dump -a --inserts -t schema_migrations -n #{Apartment.default_schema} #{dbname}`
       end
 
       #   Remove "SET search_path ..." line from SQL dump and prepend search_path set to current tenant
